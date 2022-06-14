@@ -4,12 +4,13 @@ from twisted.internet import reactor
 from buffer import Buffer
 
 class Player(object):
-    def __init__(self, client, name, match):
+    def __init__(self, client, name, team, match):
         self.client = client
         self.server = client.server
         self.match = match
         
         self.name = ' '.join(emoji.emojize(re.sub(r"[^\x00-\x7F]+", "", emoji.demojize(name)).strip())[:20].split()).upper()
+        self.team = team
         self.pendingWorld = None
         self.level = int()
         self.zone = int()
@@ -30,7 +31,7 @@ class Player(object):
         self.client.sendBin(code, b)
 
     def getSimpleData(self):
-        return {"id": self.id, "name": self.name}
+        return {"id": self.id, "name": self.name, "team": self.team}
 
     def serializePlayerObject(self):
         return Buffer().writeInt16(self.id).writeInt8(self.level).writeInt8(self.zone).writeShor2(self.posX, self.posY).toBytes()

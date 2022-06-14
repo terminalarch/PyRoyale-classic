@@ -154,9 +154,17 @@ class MyServerProtocol(WebSocketServerProtocol):
                     if b[0] == self.address:
                         self.blocked = True
                 
-                self.player = Player(self,
+                if self.server.squadCodes == 0:
+                    self.player = Player(self,
                                      packet["name"],
+                                     ""
                                      self.server.getMatch())
+                elif self.server.squadCodes == 1:
+                    self.player = Player(self,
+                                        packet["name"],
+                                        packet["team"],
+                                        self.server.getMatch())
+
                 self.loginSuccess()
                 self.server.players.append(self.player)
                 
@@ -356,6 +364,7 @@ class MyServerFactory(WebSocketServerFactory):
         self.statusPath = config.get('Server', 'StatusPath').strip()
         self.defaultName = config.get('Server', 'DefaultName').strip()
         self.maxSimulIP = config.getint('Server', 'MaxSimulIP')
+        self.squadCodes = config.getint('Server', 'SquadCodes')
         self.playerMin = config.getint('Match', 'PlayerMin')
         self.playerCap = config.getint('Match', 'PlayerCap')
         self.startTimer = config.getint('Match', 'StartTimer')
