@@ -1,5 +1,5 @@
-# PyRoyale NoSquad
-A fork of the open-source emulator for Mario Royale designed to run versions pre-1.1.0
+# PyRoyale Classic
+A fork of the open-source emulator for Mario Royale designed to run versions pre-1.2.4
 
 ![ScreenShot](https://i.imgur.com/4gpGSLs.png)
 
